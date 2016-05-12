@@ -6,14 +6,15 @@ app.set('views', 'src/views');
 app.set('view engine', 'jade');
 
 app.get('/', function( req, res ){
-	fs.readFile('../colors.json', function(){
+	fs.readFile('./resources/users.json', function(err, data){
 		if(err){
-			console.log(error);
+			console.log("Oops: " + err);
 		}
-		var parsedData = JSON.parse(data);
-		console.log(parsedData);
+
+		var parsedUsers = JSON.parse(data);
+		console.log(parsedUsers);
 		res.render("index", {
-			users: parsedData.userArray
+			users: parsedUsers.userArray
 		});
 	});
 
