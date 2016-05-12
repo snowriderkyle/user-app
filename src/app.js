@@ -14,7 +14,7 @@ app.get('/', function( req, res ){
 
 
 		var parsedUsers = JSON.parse(data);
-		console.log(parsedUsers);
+		
 		res.render("index", {
 			users: parsedUsers.userArray
 		});
@@ -29,8 +29,20 @@ app.get( '/search', function ( req, res) {
 });
 
 app.post( '/userMatch', function ( req, res) { 
-	req.("")
-}
+	fs.readFile('./resources/users.json', function( err, data ){
+		if(err){ 
+			console.log("Oops: " + err);
+		}
+		var parsedUsers = JSON.parse(data);
+		
+		
+	for ( i = 0; i < parsedUsers.length; i++){
+		console.log('hi')
+
+	} 
+	})
+	res.send(JSON.stringify(req.body))
+});
 
 var server = app.listen(3000, function(){
 	console.log('Example app listening on port: ' + server.address().port);
