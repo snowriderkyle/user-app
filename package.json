@@ -1,8 +1,13 @@
 {
   "name": "user-app",
   "version": "1.0.0",
-  "description": "User-app ",
+  "description": "User Information App - Web Server",
   "main": "index.js",
+  "dependencies": {
+    "express": "^4.13.4",
+    "jade": "^1.11.0"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,12 +15,9 @@
     "type": "git",
     "url": "git+https://github.com/snowriderkyle/user-app.git"
   },
-  "keywords": [
-    "user",
-    "app"
-  ],
-  "author": "Kyle",
-  "license": "MIT",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/snowriderkyle/user-app/issues"
   },

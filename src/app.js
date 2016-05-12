@@ -11,6 +11,7 @@ app.get('/', function( req, res ){
 			console.log("Oops: " + err);
 		}
 
+
 		var parsedUsers = JSON.parse(data);
 		console.log(parsedUsers);
 		res.render("index", {
@@ -18,6 +19,11 @@ app.get('/', function( req, res ){
 		});
 	});
 
+});
+
+
+app.get( '/search', function ( req, res) {
+ 	res.render("search");
 });
 
 var server = app.listen(3000, function(){
