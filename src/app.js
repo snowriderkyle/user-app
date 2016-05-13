@@ -3,6 +3,7 @@ var fs = require('fs');
 var app = express();
 var bodyParser = require( "body-parser")
 
+
 app.set('views', 'src/views');
 app.set('view engine', 'jade');
 
@@ -16,7 +17,7 @@ app.get('/', function( req, res ){
 		var parsedUsers = JSON.parse(data);
 		
 		res.render("index", {
-			users: parsedUsers.userArray
+			users: parsedUsers
 		});
 	});
 
@@ -28,20 +29,32 @@ app.get( '/search', function ( req, res) {
  	res.render("search");
 });
 
-app.post( '/userMatch', function ( req, res) { 
+app.post( '/searchResult', function ( req, res) { 
 	fs.readFile('./resources/users.json', function( err, data ){
 		if(err){ 
 			console.log("Oops: " + err);
 		}
 		var parsedUsers = JSON.parse(data);
+		var searchQuery = req.body.name
+		var searchResult = []
+
 		
 		
 	for ( i = 0; i < parsedUsers.length; i++){
-		console.log('hi')
+		if ( searchQuery == parsedUsers[i].firstname || searchQuery == parsedUsers[i].lastname ){
+			searchResult.push(parsedUsers[i].firstname, parsedUsers[i].lastname, parsedUsers[i].email)
+		}
+			} 
 
-	} 
+		if (searchResult.length > 0){
+			
+			res.send ("Firstname: " + searchResult[0] + "<br>" + "Lastname: " + searchResult[1]+ "<br>" + "Email: " + searchResult[2])
+		}
+		else {res.send("No results were found.")
+			
+		}
 	})
-	res.send(JSON.stringify(req.body))
+	
 });
 
 var server = app.listen(3000, function(){
