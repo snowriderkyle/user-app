@@ -6,7 +6,7 @@ var bodyParser = require( "body-parser")
 
 app.set('views', 'src/views');
 app.set('view engine', 'jade');
-
+//Here i get the json file and display it on index.js
 app.get('/', function( req, res ){
 	fs.readFile('./resources/users.json', function(err, data){
 		if(err){
@@ -24,11 +24,11 @@ app.get('/', function( req, res ){
 });
 
 app.use(bodyParser.urlencoded({ extended: true}))
-
+// Here i display my search page
 app.get( '/search', function ( req, res) {
  	res.render("search");
 });
-
+// Here I post the input from the search page
 app.post( '/searchResult', function ( req, res) { 
 	fs.readFile('./resources/users.json', function( err, data ){
 		if(err){ 
@@ -37,8 +37,7 @@ app.post( '/searchResult', function ( req, res) {
 		var parsedUsers = JSON.parse(data);
 		var searchInput = req.body.name
 		var searchResult = []
-
-		
+// Here I use a for loop with if else statements to loop through the array and search for a match with input and names
 		
 	for ( i = 0; i < parsedUsers.length; i++){
 		if ( searchInput == parsedUsers[i].firstname || searchInput == parsedUsers[i].lastname ){
@@ -56,12 +55,12 @@ app.post( '/searchResult', function ( req, res) {
 	});
 	
 });
-
+// Here I display my userCreate page where you can sign up
 app.get( '/userCreate', function ( req, res) {
  	res.render("userCreate");
 
 });
-
+// Here i use post to add the users input to the array and display it on the index page
 app.post( '/', function( req, res ){ 
 	fs.readFile( './resources/users.json', function( err, data ){ 
 		if (err){
@@ -82,7 +81,7 @@ app.post( '/', function( req, res ){
 	})
 	})
 })
-
+// Here i display it all on my localhost
 var server = app.listen(3000, function(){
 	console.log('Example app listening on port: ' + server.address().port);
 
