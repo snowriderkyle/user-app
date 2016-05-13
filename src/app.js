@@ -53,13 +53,35 @@ app.post( '/searchResult', function ( req, res) {
 		else {res.send("No results were found.")
 			
 		}
-	})
+	});
 	
 });
 
 app.get( '/userCreate', function ( req, res) {
  	res.render("userCreate");
+
 });
+
+app.post( '/', function( req, res ){ 
+	fs.readFile( './resources/users.json', function( err, data ){ 
+		if (err){
+			console.log( 'couldn\'t save your info..' + err)
+		}
+		var parsedUsers = JSON.parse(data);
+		var newUser = {"firstname": req.body.firstname, "lastname": req.body.lastname, "email": req.body.email}
+		parsedUsers.push(newUser)
+
+		fs.writeFile ('./resources/users.json', JSON.stringify(parsedUsers), function(err){
+			if (err){
+				throw err
+			};
+			res.render ('index',{ 
+				users: parsedUsers
+			})
+
+	})
+	})
+})
 
 var server = app.listen(3000, function(){
 	console.log('Example app listening on port: ' + server.address().port);

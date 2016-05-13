@@ -2,7 +2,9 @@ doctype html
 html
 	head
 	body
-		a(href='/search') search someone you know
+		a(href='/search') Search someone you know!
+		br
+		a(href='/userCreate') Create your own account!
 		each user in users
 			ul
 				li=user.firstname
