@@ -35,13 +35,13 @@ app.post( '/searchResult', function ( req, res) {
 			console.log("Oops: " + err);
 		}
 		var parsedUsers = JSON.parse(data);
-		var searchQuery = req.body.name
+		var searchInput = req.body.name
 		var searchResult = []
 
 		
 		
 	for ( i = 0; i < parsedUsers.length; i++){
-		if ( searchQuery == parsedUsers[i].firstname || searchQuery == parsedUsers[i].lastname ){
+		if ( searchInput == parsedUsers[i].firstname || searchInput == parsedUsers[i].lastname ){
 			searchResult.push(parsedUsers[i].firstname, parsedUsers[i].lastname, parsedUsers[i].email)
 		}
 			} 
@@ -57,8 +57,13 @@ app.post( '/searchResult', function ( req, res) {
 	
 });
 
+app.get( '/userCreate', function ( req, res) {
+ 	res.render("userCreate");
+});
+
 var server = app.listen(3000, function(){
 	console.log('Example app listening on port: ' + server.address().port);
+
 
 
 });
