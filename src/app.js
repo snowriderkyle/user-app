@@ -6,6 +6,7 @@ var bodyParser = require( "body-parser")
 
 app.set('views', 'src/views');
 app.set('view engine', 'jade');
+app.use(express.static('Public'));
 //Here i get the json file and display it on index.js
 app.get('/', function( req, res ){
 	fs.readFile('./resources/users.json', function(err, data){
@@ -63,12 +64,7 @@ app.get( '/userCreate', function ( req, res) {
  	res.render("userCreate");
 
 });
-var server = app.listen(3000, function(){
-	console.log('Example app listening on port: ' + server.address().port);
 
-
-
-});
 
 // Here i use post to add the users input to the array and display it on the index page
 app.post( '/', function( req, res ){ 
@@ -86,9 +82,29 @@ app.post( '/', function( req, res ){
 			};
 			res.render ('index',{ 
 				users: parsedUsers
-			})
+			});
 
-	})
-	})
-})
+	});
+	});
+});
+
+app.post( '/Api', function( req, res ){ 
+	fs.readFile( './resources/users.json', function( err, data ){ 
+		if (err){
+			console.log( 'couldn\'t save your info..' + err)
+		}
+		var parsedUsers = JSON.parse(data);
+		fs.writeFile ('views/search.jade', JSON.stringify(parsedUsers), function(err){
+			if (err){
+				throw err
+			};
+
+});
+	});
+});
+
+var server = app.listen(3000, function(){
+	console.log('Example app listening on port: ' + server.address().port);
+});
+
 // Here i display it all on my localhost

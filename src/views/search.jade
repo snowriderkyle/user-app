@@ -1,11 +1,12 @@
 doctype html
 html
 	head
+	script(src="https://code.jquery.com/jquery-2.2.0.min.js")
+	script(src="script.js")
 	body			
 		h1 Who are you looking for?:
 			form(action="/searchResult", method="POST")
 				div.input
-				span.label 
 				input(type="text", name="name")
 				div.actions
 				input(type="submit", value="Search")
