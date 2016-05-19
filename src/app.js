@@ -43,7 +43,7 @@ app.post( '/searchResult', function ( req, res) {
 		if ( searchInput == parsedUsers[i].firstname || searchInput == parsedUsers[i].lastname ){
 			searchResult.push(parsedUsers[i].firstname, parsedUsers[i].lastname, parsedUsers[i].email)
 		}
-			} 
+			};
 
 		if (searchResult.length > 0){
 			
@@ -52,14 +52,24 @@ app.post( '/searchResult', function ( req, res) {
 		else {res.send("No results were found.")
 			
 		}
+ 	
+
 	});
-	
+
 });
+
 // Here I display my userCreate page where you can sign up
 app.get( '/userCreate', function ( req, res) {
  	res.render("userCreate");
 
 });
+var server = app.listen(3000, function(){
+	console.log('Example app listening on port: ' + server.address().port);
+
+
+
+});
+
 // Here i use post to add the users input to the array and display it on the index page
 app.post( '/', function( req, res ){ 
 	fs.readFile( './resources/users.json', function( err, data ){ 
@@ -82,9 +92,3 @@ app.post( '/', function( req, res ){
 	})
 })
 // Here i display it all on my localhost
-var server = app.listen(3000, function(){
-	console.log('Example app listening on port: ' + server.address().port);
-
-
-
-});
