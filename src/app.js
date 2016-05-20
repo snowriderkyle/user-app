@@ -89,18 +89,29 @@ app.post( '/', function( req, res ){
 });
 
 app.post( '/Api', function( req, res ){ 
+	// Created a variable that contains the searchbar input
+	var userInput = req.body.search
+	var cap = userInput.charAt(0).toUpperCase() + userInput.slice(1)
+	console.log(cap)
+	// Reading the json file 
 	fs.readFile( './resources/users.json', function( err, data ){ 
-		if (err){
-			console.log( 'couldn\'t save your info..' + err)
+		if ( err ){ 
+			console.log('Apperently something went wrong' + err);
 		}
+		// Created a variable that contains the parsed data of users.json
 		var parsedUsers = JSON.parse(data);
-		fs.writeFile ('views/search.jade', JSON.stringify(parsedUsers), function(err){
-			if (err){
-				throw err
-			};
-
-});
+		//Creating for loop to loop through the array
+	for(var i = 0; i < parsedUsers.length; i++){
+		//Creating conditionals to find out when userinput matches name from array
+		if(parsedUsers[i].firstname == userInput || parsedUsers[i].lastname == userInput){
+				console.log("Do you mean? = " + parsedUsers.firstname)
+		}
+		
+	};
+	// Send the responce back to the user
+	
 	});
+	res.send(userInput)
 });
 
 var server = app.listen(3000, function(){

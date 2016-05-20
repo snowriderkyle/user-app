@@ -4,10 +4,11 @@ $( document ).ready(function() {
 	$("input").keyup(function() {
 		console.log('typing');
 		var postdata = {
-			search: $('input').val()
+			search: $(this).val()
 		}
 		console.log(postdata);
-		$.post('/api', postdata, function(data){
+
+		$.post('/Api', postdata, function(data){
 			console.log(data)
 		});
 });
