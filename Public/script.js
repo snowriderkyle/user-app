@@ -9,7 +9,12 @@ $( document ).ready(function() {
 		console.log(postdata);
 
 		$.post('/Api', postdata, function(data){
+			$ ('#displaylist').empty()
 			console.log(data)
+			for (person in data){
+				
+				$ ( '#displaylist' ).append ('<option>' + data[person])
+			} 
 		});
 });
 });

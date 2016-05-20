@@ -3,10 +3,24 @@ html
 	head
 	script(src="https://code.jquery.com/jquery-2.2.0.min.js")
 	script(src="script.js")
-	body			
+	style(src="style.css")
+	
+	body
+	.nav
+		ul
+			li.home
+				a(href='/') Home
+			li.tutorials
+				a.active(href='search') Search
+			li.about
+				a(href='#') About
+			
+	
 		h1 Who are you looking for?:
 			form(action="/searchResult", method="POST")
 				div.input
 				input(type="text", name="name")
+				datalist#displayname
 				div.actions
 				input(type="submit", value="Search")
+		div#displaylist

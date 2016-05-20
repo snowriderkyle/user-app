@@ -91,31 +91,39 @@ app.post( '/', function( req, res ){
 app.post( '/Api', function( req, res ){ 
 	// Created a variable that contains the searchbar input
 	var userInput = req.body.search
-	var cap = userInput.charAt(0).toUpperCase() + userInput.slice(1)
-	console.log(cap)
+	var capUserInput = userInput.charAt(0).toUpperCase() + userInput.slice(1)
+	var empty = []
+	
 	// Reading the json file 
 	fs.readFile( './resources/users.json', function( err, data ){ 
 		if ( err ){ 
-			console.log('Apperently something went wrong' + err);
+			console.log('Apperently something went wrong' );
+			throw err;
 		}
 		// Created a variable that contains the parsed data of users.json
 		var parsedUsers = JSON.parse(data);
 		//Creating for loop to loop through the array
-	for(var i = 0; i < parsedUsers.length; i++){
+		for(var i = 0; i < parsedUsers.length; i++){
 		//Creating conditionals to find out when userinput matches name from array
-		if(parsedUsers[i].firstname == userInput || parsedUsers[i].lastname == userInput){
-				console.log("Do you mean? = " + parsedUsers.firstname)
-		}
+			if (parsedUsers[i].firstname.indexOf(capUserInput) > -1 || parsedUsers[i].lastname.indexOf(capUserInput) > -1 || (parsedUsers[i].firstname + " " + parsedUsers[i].lastname).indexOf(capUserInput) > -1 || (parsedUsers[i].lastname + " " + parsedUsers[i].firstname).indexOf(capUserInput) > -1){
+					empty.push(parsedUsers[i].firstname + " " + parsedUsers[i].lastname)
+			}
+
+			}
+			if( capUserInput == ''){ 
+				res.send('')}
+				else{ 
+					res.send(empty)}
 		
-	};
+		
 	// Send the responce back to the user
 	
 	});
-	res.send(userInput)
+	
 });
 
 var server = app.listen(3000, function(){
 	console.log('Example app listening on port: ' + server.address().port);
 });
 
-// Here i display it all on my localhost
+// Here i display it all on my localhost 
