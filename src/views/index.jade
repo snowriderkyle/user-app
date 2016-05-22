@@ -3,14 +3,20 @@ html
 	head
 	script(src="https://code.jquery.com/jquery-2.2.0.min.js")
 	script(src="script.js")
+	link(rel='stylesheet', href="style.css")
 	body
-		a(href='/search') Search someone you know!
-		br
-		a(href='/userCreate') Create your own account!
-		each user in users
-			ul
-				li=user.firstname
-				li=user.lastname
-				li=user.email
+	.nav
+		ul
+			li.home
+				a(href='/') Home
+			li.search
+				a.active(href='search') Search
+			li.sign-up
+				a(href='userCreate') Sign up!
+	each user in users
+		ul
+			li=user.firstname
+			li=user.lastname
+			li=user.email
 	
 	

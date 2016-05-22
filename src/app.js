@@ -6,6 +6,7 @@ var bodyParser = require( "body-parser")
 
 app.set('views', 'src/views');
 app.set('view engine', 'jade');
+app.use(express.static('Public'));
 //Here i get the json file and display it on index.js
 app.get('/', function( req, res ){
 	fs.readFile('./resources/users.json', function(err, data){
@@ -63,12 +64,7 @@ app.get( '/userCreate', function ( req, res) {
  	res.render("userCreate");
 
 });
-var server = app.listen(3000, function(){
-	console.log('Example app listening on port: ' + server.address().port);
 
-
-
-});
 
 // Here i use post to add the users input to the array and display it on the index page
 app.post( '/', function( req, res ){ 
@@ -86,9 +82,48 @@ app.post( '/', function( req, res ){
 			};
 			res.render ('index',{ 
 				users: parsedUsers
-			})
+			});
 
-	})
-	})
-})
-// Here i display it all on my localhost
+	});
+	});
+});
+
+app.post( '/Api', function( req, res ){ 
+	// Created a variable that contains the searchbar input
+	var userInput = req.body.search
+	var capUserInput = userInput.charAt(0).toUpperCase() + userInput.slice(1)
+	var empty = []
+	
+	// Reading the json file 
+	fs.readFile( './resources/users.json', function( err, data ){ 
+		if ( err ){ 
+			console.log('Apperently something went wrong' );
+			throw err;
+		}
+		// Created a variable that contains the parsed data of users.json
+		var parsedUsers = JSON.parse(data);
+		//Creating for loop to loop through the array
+		for(var i = 0; i < parsedUsers.length; i++){
+		//Creating conditionals to find out when userinput matches name from array
+			if (parsedUsers[i].firstname.indexOf(capUserInput) > -1 || parsedUsers[i].lastname.indexOf(capUserInput) > -1 || (parsedUsers[i].firstname + " " + parsedUsers[i].lastname).indexOf(capUserInput) > -1 || (parsedUsers[i].lastname + " " + parsedUsers[i].firstname).indexOf(capUserInput) > -1){
+					empty.push(parsedUsers[i].firstname + " " + parsedUsers[i].lastname)
+			}
+
+			}
+			if( capUserInput == ''){ 
+				res.send('')}
+				else{ 
+					res.send(empty)}
+		
+		
+	// Send the responce back to the user
+	
+	});
+	
+});
+
+var server = app.listen(3000, function(){
+	console.log('Example app listening on port: ' + server.address().port);
+});
+
+// Here i display it all on my localhost 
